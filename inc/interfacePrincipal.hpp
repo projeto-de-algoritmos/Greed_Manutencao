@@ -4,6 +4,8 @@
 #include <iostream>
 #include <vector> 
 
+#include "tarefa.hpp"
+
 using namespace std;
 
 class InterfacePrincipal {
