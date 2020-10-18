@@ -93,12 +93,15 @@ void InterfacePrincipal::divisaoTarefas() {
 }
 
 void InterfacePrincipal::imprimirTarefas(){
+    if(tarefas.size() == 0)
+        spam("Não há tarefas cadastradas");
+    else {
     string volta; 
     for(Tarefa t:tarefas){
         t.imprimir(); 
         cout << "----------------------------------------" << endl;
     }
-
-    cout << "Aperte enter para voltar" << endl; 
-    cin >> volta; 
+    cout << "(0) Voltar" << endl; 
+    cin >> volta;
+    }
 }
