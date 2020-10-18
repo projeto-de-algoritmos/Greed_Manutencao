@@ -1,4 +1,5 @@
 #include "interfacePrincipal.hpp"
+#include "tarefa.hpp"
 
 InterfacePrincipal::InterfacePrincipal() {
     system("clear||cls");
@@ -38,6 +39,7 @@ int InterfacePrincipal::getInt(string mensagem) {
 }
 
 void InterfacePrincipal::cadastroTarefa() {
+
 
 }
 
