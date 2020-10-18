@@ -108,7 +108,23 @@ void InterfacePrincipal::divisaoTarefas() {
         spam("É necessário cadastrar tarefas");
         return;
     }
-    intervalPartitioning();
+    vector <Tarefa> tarefas;
+    vector <vector <int>> distribuicao;
+    intervalPartitioning(tarefas, distribuicao);
+    int qtdeDivisoes = distribuicao.size();
+    for(int i = 0; i < qtdeDivisoes; i++) {
+        cout << "___Divisão " << i << "___" << endl << endl;
+        int qtdeTarefas = distribuicao[i].size();
+        for(int j = 0; j < qtdeTarefas; j++) {
+            tarefas[distribuicao[i][j]].imprimir();
+            cout << endl;
+        }
+        cout << "----------------------------------------" << endl << endl;
+    }
+    cout << "(0) Voltar" << endl; 
+    string volta;
+    cin >> volta;
+    system("clear||cls");
 }
 
 bool ordenarInicioAntes(Tarefa a, Tarefa b) {
@@ -120,9 +136,8 @@ bool ordenarInicioAntes(Tarefa a, Tarefa b) {
         return false;
 }
 
-vector <vector <int>> InterfacePrincipal::intervalPartitioning() {
-    vector <Tarefa> tarefas = this->tarefas;
-    vector <vector <int>> distribuicao;
+void InterfacePrincipal::intervalPartitioning(vector <Tarefa> &tarefas, vector <vector <int>> &distribuicao) {
+    tarefas = this->tarefas;
     int qtdeTarefas = tarefas.size();
     sort(tarefas.begin(), tarefas.end(), ordenarInicioAntes);
     distribuicao.push_back(vector <int>());
@@ -148,5 +163,4 @@ vector <vector <int>> InterfacePrincipal::intervalPartitioning() {
             distribuicao.back().push_back(i);
         }
     }
-    return distribuicao;
 }

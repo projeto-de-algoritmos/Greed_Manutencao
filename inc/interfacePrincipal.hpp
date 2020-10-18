@@ -18,7 +18,7 @@ public:
     void divisaoTarefas();
     void spam(string mensagem);
     void imprimirTarefas();
-    vector <vector <int>> intervalPartitioning();
+    void intervalPartitioning(vector <Tarefa> &tarefas, vector <vector <int>> &distribuicao);
 };
 
 #endif
