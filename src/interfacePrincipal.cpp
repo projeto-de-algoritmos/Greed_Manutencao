@@ -9,13 +9,16 @@ void InterfacePrincipal::menuPrincipal() {
     while(true) {
         cout << "(1) Cadastrar nova tarefa" << endl;
         cout << "(2) Calcular divisão das tarefas" << endl;
+        cout << "(3) Visualizar tarefas" << endl;
         cout << "(0) Finalizar" << endl;
-        int opcao = getInt("", 0, 2);
+        int opcao = getInt("", 0, 3);
         system("clear||cls");
         if(opcao == 1)
             cadastroTarefa();
         else if(opcao == 2)
             divisaoTarefas();
+        else if(opcao == 3)
+            imprimirTarefas();
         else
             break;
     }
@@ -79,7 +82,7 @@ bool InterfacePrincipal::validarCadastro(Tarefa tarefa){
     if(tarefa.getHoraInicial() > tarefa.getHoraFinal())
         return false; 
     else if(tarefa.getHoraInicial() == tarefa.getHoraFinal()){
-        if(tarefa.getMinInicial() <= tarefa.getMinFinal())
+        if(tarefa.getMinInicial() >= tarefa.getMinFinal())
             return false;
     }
     return true;
@@ -87,4 +90,15 @@ bool InterfacePrincipal::validarCadastro(Tarefa tarefa){
 
 void InterfacePrincipal::divisaoTarefas() {
 
+}
+
+void InterfacePrincipal::imprimirTarefas(){
+    string volta; 
+    for(Tarefa t:tarefas){
+        t.imprimir(); 
+        cout << "----------------------------------------" << endl;
+    }
+
+    cout << "Aperte enter para voltar" << endl; 
+    cin >> volta; 
 }
