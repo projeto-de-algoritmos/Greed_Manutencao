@@ -2,10 +2,13 @@
 #define INTERFACEPRINCIPAL_HPP
 
 #include <iostream>
+#include <vector> 
 
 using namespace std;
 
 class InterfacePrincipal {
+private: 
+    vector <Tarefa> tarefas; 
 public:
     InterfacePrincipal();
     void menuPrincipal();

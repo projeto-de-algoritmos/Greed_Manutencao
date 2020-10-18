@@ -39,7 +39,8 @@ int InterfacePrincipal::getInt(string mensagem) {
 }
 
 void InterfacePrincipal::cadastroTarefa() {
-
+    int hI, hF, mI, mN;
+    string descricao; 
 
 }
 
