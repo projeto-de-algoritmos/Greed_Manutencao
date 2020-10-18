@@ -19,5 +19,7 @@ class Tarefa{
         int getMinInicial();
         int getHoraFinal();
         int getMinFinal(); 
+        void imprimir();
+        
 };
 #endif

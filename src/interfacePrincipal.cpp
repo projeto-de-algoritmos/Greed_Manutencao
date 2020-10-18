@@ -59,7 +59,7 @@ void InterfacePrincipal::spam(string mensagem){
 void InterfacePrincipal::cadastroTarefa() {
     cout << "Cadastrando uma tarefa" << endl;
     string descricao = getString("Descreva a tarefa: ");
-    cout << endl << "Horário de início da tarefa" << endl; 
+    cout << endl << "Horário de início da tarefa" << endl;
     int hI = getInt("Hora (0 - 23): ", 0, 23);
     int mI = getInt("Minuto (0 - 59): ", 0, 59);
     cout << endl << "Horário de conclusão da tarefa" << endl;
@@ -79,7 +79,7 @@ bool InterfacePrincipal::validarCadastro(Tarefa tarefa){
     if(tarefa.getHoraInicial() > tarefa.getHoraFinal())
         return false; 
     else if(tarefa.getHoraInicial() == tarefa.getHoraFinal()){
-        if(tarefa.getMinInicial() > tarefa.getMinFinal())
+        if(tarefa.getMinInicial() <= tarefa.getMinFinal())
             return false;
     }
     return true;

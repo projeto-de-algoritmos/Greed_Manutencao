@@ -20,6 +20,7 @@ public:
     bool validarCadastro(Tarefa tarefa);
     void divisaoTarefas();
     void spam(string mensagem);
+    void imprimirTarefas(); 
 };
 
 #endif
