@@ -14,11 +14,12 @@ private:
 public:
     InterfacePrincipal();
     void menuPrincipal();
-    int getInt(string mensagem);
+    int getInt(string mensagem, int min, int max);
     string getString(string mensagem);
     void cadastroTarefa();
     bool validarCadastro(Tarefa tarefa);
     void divisaoTarefas();
+    void spam(string mensagem);
 };
 
 #endif

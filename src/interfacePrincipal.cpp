@@ -10,7 +10,7 @@ void InterfacePrincipal::menuPrincipal() {
         cout << "(1) Cadastrar nova tarefa" << endl;
         cout << "(2) Calcular divisão das tarefas" << endl;
         cout << "(0) Finalizar" << endl;
-        int opcao = getInt("");
+        int opcao = getInt("", 0, 2);
         system("clear||cls");
         if(opcao == 1)
             cadastroTarefa();
@@ -34,14 +34,14 @@ string InterfacePrincipal::getString(string mensagem) {
     return entrada;
 }
 
-int InterfacePrincipal::getInt(string mensagem) {
+int InterfacePrincipal::getInt(string mensagem, int min, int max) {
     int valor;
     bool loop = true;
     while(loop) {
         cout << mensagem;
         loop = false;
         cin >> valor;
-        if(cin.fail()) {
+        if(cin.fail() || valor > max || valor < min) {
             cin.clear();
             cout << "Entrada inválida." << endl;
             loop = true;
@@ -51,23 +51,27 @@ int InterfacePrincipal::getInt(string mensagem) {
     return valor;
 }
 
+void InterfacePrincipal::spam(string mensagem){
+    system("clear||cls");
+    cout << mensagem << endl << endl;
+}
+
 void InterfacePrincipal::cadastroTarefa() {
     cout << "Cadastrando uma tarefa" << endl;
     string descricao = getString("Descreva a tarefa: ");
     cout << endl << "Horário de início da tarefa" << endl; 
-    int hI = getInt("Hora (0 - 24): ");
-    int mI = getInt("Minuto (0 - 60): ");
+    int hI = getInt("Hora (0 - 23): ", 0, 23);
+    int mI = getInt("Minuto (0 - 59): ", 0, 59);
     cout << endl << "Horário de conclusão da tarefa" << endl;
-    int hF = getInt("Hora (0 - 24): ");
-    int mF = getInt("Minuto (0 - 60): ");
-    system("clear||cls");
+    int hF = getInt("Hora (0 - 23): ", 0, 24);
+    int mF = getInt("Minuto (0 - 59): ", 0, 59);
     Tarefa tarefa(hI,mI,hF,mF,descricao); 
     if(validarCadastro(tarefa)){
         tarefas.push_back(tarefa);
-        cout << "Cadastro realizado com sucesso!!" << endl;
+        spam("Tarefa cadastrada com sucesso!"); 
     }
     else
-        cout << "Não foi possível cadastrar a tarefa. Por favor, verifique os dados" << endl << endl;
+        spam("Não foi possível cadastrar a tarefa. Por favor, verifique os dados");
     
 }
 
