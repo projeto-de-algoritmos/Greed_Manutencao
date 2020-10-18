@@ -21,6 +21,19 @@ void InterfacePrincipal::menuPrincipal() {
     }
 }
 
+string getString(string mensagem) {
+    string entrada;
+    while(true) {
+        cout << mensagem;
+        getline(cin, entrada);
+        if(entrada.empty() || entrada[0] == ' ')
+            cout << endl << "Entrada inválida" << endl; 
+        else
+            break; 
+    }
+    return entrada;
+}
+
 int InterfacePrincipal::getInt(string mensagem) {
     int valor;
     bool loop = true;
@@ -41,6 +54,7 @@ int InterfacePrincipal::getInt(string mensagem) {
 void InterfacePrincipal::cadastroTarefa() {
     int hI, hF, mI, mN;
     string descricao; 
+
 
 }
 

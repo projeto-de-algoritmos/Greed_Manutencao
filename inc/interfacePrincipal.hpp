@@ -13,6 +13,7 @@ public:
     InterfacePrincipal();
     void menuPrincipal();
     int getInt(string mensagem);
+    string getString(string mensagem);
     void cadastroTarefa();
     void divisaoTarefas();
 };
