@@ -15,5 +15,9 @@ class Tarefa{
         bool realizada;
     public:
         Tarefa(int hI, int mI, int hF, int mF, string descricao);
+        int getHoraInicial();
+        int getMinInicial();
+        int getHoraFinal();
+        int getMinFinal(); 
 };
 #endif

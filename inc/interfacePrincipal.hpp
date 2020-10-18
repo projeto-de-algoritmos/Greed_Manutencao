@@ -17,6 +17,7 @@ public:
     int getInt(string mensagem);
     string getString(string mensagem);
     void cadastroTarefa();
+    bool validarCadastro(Tarefa tarefa);
     void divisaoTarefas();
 };
 

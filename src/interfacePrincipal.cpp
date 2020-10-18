@@ -61,7 +61,24 @@ void InterfacePrincipal::cadastroTarefa() {
     int hF = getInt("Hora (0 - 24): ");
     int mF = getInt("Minuto (0 - 60): ");
     system("clear||cls");
-    tarefas.push_back(Tarefa(hI,mI,hF,mF,descricao)); 
+    Tarefa tarefa(hI,mI,hF,mF,descricao); 
+    if(validarCadastro(tarefa)){
+        tarefas.push_back(tarefa);
+        cout << "Cadastro realizado com sucesso!!" << endl;
+    }
+    else
+        cout << "Não foi possível cadastrar a tarefa. Por favor, verifique os dados" << endl << endl;
+    
+}
+
+bool InterfacePrincipal::validarCadastro(Tarefa tarefa){
+    if(tarefa.getHoraInicial() > tarefa.getHoraFinal())
+        return false; 
+    else if(tarefa.getHoraInicial() == tarefa.getHoraFinal()){
+        if(tarefa.getMinInicial() > tarefa.getMinFinal())
+            return false;
+    }
+    return true;
 }
 
 void InterfacePrincipal::divisaoTarefas() {
