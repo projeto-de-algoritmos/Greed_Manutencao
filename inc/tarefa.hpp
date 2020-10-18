@@ -20,6 +20,7 @@ class Tarefa{
         int getHoraFinal();
         int getMinFinal(); 
         void imprimir();
+        void imprimirHora(string tipoHora, int hr, int min);
         
 };
 #endif

@@ -60,7 +60,7 @@ void InterfacePrincipal::spam(string mensagem){
 }
 
 void InterfacePrincipal::cadastroTarefa() {
-    cout << "Cadastrando uma tarefa" << endl;
+    cout << "Cadastrando uma tarefa" << endl << endl;
     string descricao = getString("Descreva a tarefa: ");
     cout << endl << "Horário de início da tarefa" << endl;
     int hI = getInt("Hora (0 - 23): ", 0, 23);
@@ -103,5 +103,6 @@ void InterfacePrincipal::imprimirTarefas(){
     }
     cout << "(0) Voltar" << endl; 
     cin >> volta;
+    system("clear||cls");
     }
 }

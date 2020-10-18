@@ -27,6 +27,16 @@ int Tarefa::getMinFinal(){
 
 void Tarefa::imprimir(){
     cout << "Tarefa: " << descricao << endl; 
-    cout << "Horário de início: " << horaInicial << ":" << minInical << endl;
-    cout << "Horário de término: " << horaFinal << ":" << minFinal << endl;
+    imprimirHora("início", horaInicial, minInical); 
+    imprimirHora("término", horaFinal, minFinal);
 } 
+
+void Tarefa::imprimirHora(string tipoHorario, int hr, int min){
+    cout << "Horário de " << tipoHorario << ": "; 
+    if(hr < 10)
+        cout << "0"; 
+    cout << hr << ":"; 
+    if(min < 10)
+        cout << "0"; 
+    cout << min << endl;
+}
