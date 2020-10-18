@@ -1,5 +1,6 @@
 #include "interfacePrincipal.hpp"
 
+#include <algorithm>
 
 InterfacePrincipal::InterfacePrincipal() {
     system("clear||cls");
@@ -8,17 +9,17 @@ InterfacePrincipal::InterfacePrincipal() {
 void InterfacePrincipal::menuPrincipal() {
     while(true) {
         cout << "(1) Cadastrar nova tarefa" << endl;
-        cout << "(2) Calcular divisão das tarefas" << endl;
-        cout << "(3) Visualizar tarefas" << endl;
+        cout << "(2) Visualizar tarefas" << endl;
+        cout << "(3) Calcular divisão das tarefas" << endl;
         cout << "(0) Finalizar" << endl;
         int opcao = getInt("", 0, 3);
         system("clear||cls");
         if(opcao == 1)
             cadastroTarefa();
         else if(opcao == 2)
-            divisaoTarefas();
-        else if(opcao == 3)
             imprimirTarefas();
+        else if(opcao == 3)
+            divisaoTarefas();
         else
             break;
     }
@@ -54,7 +55,7 @@ int InterfacePrincipal::getInt(string mensagem, int min, int max) {
     return valor;
 }
 
-void InterfacePrincipal::spam(string mensagem){
+void InterfacePrincipal::spam(string mensagem) {
     system("clear||cls");
     cout << mensagem << endl << endl;
 }
@@ -75,10 +76,9 @@ void InterfacePrincipal::cadastroTarefa() {
     }
     else
         spam("Não foi possível cadastrar a tarefa. Por favor, verifique os dados");
-    
 }
 
-bool InterfacePrincipal::validarCadastro(Tarefa tarefa){
+bool InterfacePrincipal::validarCadastro(Tarefa tarefa) {
     if(tarefa.getHoraInicial() > tarefa.getHoraFinal())
         return false; 
     else if(tarefa.getHoraInicial() == tarefa.getHoraFinal()){
@@ -88,21 +88,65 @@ bool InterfacePrincipal::validarCadastro(Tarefa tarefa){
     return true;
 }
 
-void InterfacePrincipal::divisaoTarefas() {
-
-}
-
-void InterfacePrincipal::imprimirTarefas(){
+void InterfacePrincipal::imprimirTarefas() {
     if(tarefas.size() == 0)
         spam("Não há tarefas cadastradas");
     else {
-    string volta; 
-    for(Tarefa t:tarefas){
-        t.imprimir(); 
-        cout << "----------------------------------------" << endl;
+        string volta; 
+        for(Tarefa t:tarefas){
+            t.imprimir(); 
+            cout << "----------------------------------------" << endl;
+        }
+        cout << "(0) Voltar" << endl; 
+        cin >> volta;
+        system("clear||cls");
     }
-    cout << "(0) Voltar" << endl; 
-    cin >> volta;
-    system("clear||cls");
+}
+
+void InterfacePrincipal::divisaoTarefas() {
+    if(tarefas.empty()) {
+        spam("É necessário cadastrar tarefas");
+        return;
     }
+    intervalPartitioning();
+}
+
+bool ordenarInicioAntes(Tarefa a, Tarefa b) {
+    if(a.getHoraInicial() < b.getHoraInicial())
+        return true;
+    else if(a.getHoraInicial() == b.getHoraInicial())
+        return a.getMinInicial() < b.getMinInicial();
+    else
+        return false;
+}
+
+vector <vector <int>> InterfacePrincipal::intervalPartitioning() {
+    vector <Tarefa> tarefas = this->tarefas;
+    vector <vector <int>> distribuicao;
+    int qtdeTarefas = tarefas.size();
+    sort(tarefas.begin(), tarefas.end(), ordenarInicioAntes);
+    distribuicao.push_back(vector <int>());
+    distribuicao[0].push_back(0);
+    for(int i = 1; i < qtdeTarefas; i++) {
+        bool alocada = false;
+        int qtdedistribuicao = distribuicao.size();
+        for(int j = 0; j < qtdedistribuicao; j++) {
+            if(tarefas[distribuicao[j].back()].getHoraFinal() < tarefas[i].getHoraInicial()) {
+                distribuicao[j].push_back(i);
+                alocada = true;
+                break;
+            } else if(tarefas[distribuicao[j].back()].getHoraFinal() == tarefas[i].getHoraInicial()) {
+                if(tarefas[distribuicao[j].back()].getMinFinal() <= tarefas[i].getMinInicial()) {
+                    distribuicao[j].push_back(i);
+                    alocada = true;
+                    break;
+                }
+            }
+        }
+        if(!alocada) {
+            distribuicao.push_back(vector<int>());
+            distribuicao.back().push_back(i);
+        }
+    }
+    return distribuicao;
 }

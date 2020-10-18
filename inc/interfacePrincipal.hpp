@@ -1,16 +1,13 @@
 #ifndef INTERFACEPRINCIPAL_HPP
 #define INTERFACEPRINCIPAL_HPP
 
-#include <iostream>
-#include <vector> 
-
 #include "tarefa.hpp"
 
-using namespace std;
+#include <vector>
 
 class InterfacePrincipal {
-private: 
-    vector <Tarefa> tarefas; 
+private:
+    vector <Tarefa> tarefas;
 public:
     InterfacePrincipal();
     void menuPrincipal();
@@ -20,7 +17,8 @@ public:
     bool validarCadastro(Tarefa tarefa);
     void divisaoTarefas();
     void spam(string mensagem);
-    void imprimirTarefas(); 
+    void imprimirTarefas();
+    vector <vector <int>> intervalPartitioning();
 };
 
 #endif
