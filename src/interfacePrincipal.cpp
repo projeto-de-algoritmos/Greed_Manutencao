@@ -109,14 +109,16 @@ void InterfacePrincipal::divisaoTarefas() {
         return;
     }
     vector <Tarefa> tarefas;
-    vector <vector <int>> distribuicao;
+    priority_queue <vector <Tarefa>, vector <vector <Tarefa>>, comparar> distribuicao;
     intervalPartitioning(tarefas, distribuicao);
     int qtdeDivisoes = distribuicao.size();
     for(int i = 0; i < qtdeDivisoes; i++) {
         cout << "___Divisão " << i << "___" << endl << endl;
-        int qtdeTarefas = distribuicao[i].size();
+        vector <Tarefa> secao = distribuicao.top();
+        distribuicao.pop();
+        int qtdeTarefas = secao.size();
         for(int j = 0; j < qtdeTarefas; j++) {
-            tarefas[distribuicao[i][j]].imprimir();
+            secao[j].imprimir();
             cout << endl;
         }
         cout << "----------------------------------------" << endl << endl;
@@ -136,31 +138,35 @@ bool ordenarInicioAntes(Tarefa a, Tarefa b) {
         return false;
 }
 
-void InterfacePrincipal::intervalPartitioning(vector <Tarefa> &tarefas, vector <vector <int>> &distribuicao) {
+void InterfacePrincipal::intervalPartitioning(vector <Tarefa> &tarefas, priority_queue <vector <Tarefa>, vector <vector <Tarefa>>, comparar> &distribuicao) {
     tarefas = this->tarefas;
     int qtdeTarefas = tarefas.size();
     sort(tarefas.begin(), tarefas.end(), ordenarInicioAntes);
-    distribuicao.push_back(vector <int>());
-    distribuicao[0].push_back(0);
+    vector <Tarefa> secao;
+    secao.push_back(tarefas[0]);
+    distribuicao.push(secao);
     for(int i = 1; i < qtdeTarefas; i++) {
         bool alocada = false;
-        int qtdedistribuicao = distribuicao.size();
-        for(int j = 0; j < qtdedistribuicao; j++) {
-            if(tarefas[distribuicao[j].back()].getHoraFinal() < tarefas[i].getHoraInicial()) {
-                distribuicao[j].push_back(i);
+        Tarefa topo = distribuicao.top().back();
+        if(topo.getHoraFinal() < tarefas[i].getHoraInicial()) {
+            secao = distribuicao.top();
+            distribuicao.pop();
+            secao.push_back(tarefas[i]);
+            distribuicao.push(secao);
+            alocada = true;
+        } else if(topo.getHoraFinal() == tarefas[i].getHoraInicial()) {
+            if(topo.getMinFinal() <= tarefas[i].getMinInicial()) {
+                secao = distribuicao.top();
+                distribuicao.pop();
+                secao.push_back(tarefas[i]);
+                distribuicao.push(secao);
                 alocada = true;
-                break;
-            } else if(tarefas[distribuicao[j].back()].getHoraFinal() == tarefas[i].getHoraInicial()) {
-                if(tarefas[distribuicao[j].back()].getMinFinal() <= tarefas[i].getMinInicial()) {
-                    distribuicao[j].push_back(i);
-                    alocada = true;
-                    break;
-                }
             }
         }
         if(!alocada) {
-            distribuicao.push_back(vector<int>());
-            distribuicao.back().push_back(i);
+            secao = vector <Tarefa>();
+            secao.push_back(tarefas[i]);
+            distribuicao.push(secao);
         }
     }
 }
