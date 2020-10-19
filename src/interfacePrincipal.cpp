@@ -173,3 +173,10 @@ void InterfacePrincipal::intervalPartitioning(vector <Tarefa> &tarefas, priority
         }
     }
 }
+
+void InterfacePrincipal::intervalPartitioning(){
+    sort(tarefas.begin(), tarefas.end(), ordenarInicioAntes); 
+    priority_queue <vector <Tarefa>, vector <Funcionario>, comparar> distribuicao;
+    
+
+}

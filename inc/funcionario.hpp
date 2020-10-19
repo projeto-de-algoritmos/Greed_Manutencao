@@ -16,9 +16,12 @@ private:
 
 public: 
     Funcionario(Tarefa tarefa);
+    int getHora();
     void setHora(int hora); 
+    int getMin(); 
     void setMin(int min);  
     void imprimeTarefas(); 
+    int totalTarefas(); 
 };
 
 

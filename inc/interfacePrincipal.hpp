@@ -2,6 +2,7 @@
 #define INTERFACEPRINCIPAL_HPP
 
 #include "tarefa.hpp"
+#include "funcionario.hpp"
 
 #include <vector>
 #include <queue>
@@ -9,17 +10,19 @@
 class InterfacePrincipal {
 private:
     vector <Tarefa> tarefas;
-    typedef struct comparar {
-        bool operator()(vector <Tarefa> &a, vector <Tarefa> &b) {
-            if(a.back().getHoraFinal() == b.back().getHoraFinal()) {
-                if(a.back().getMinFinal() == b.back().getMinFinal())
-                    return a.size() > b.size();
+    typedef struct comparar{
+        bool operator()(Funcionario a, Funcionario b) {
+            if(a.getHora() == b.getHora()){
+                if(a.getMin() == b.getMin()){
+                    return (a.totalTarefas() > b.totalTarefas());
+                }
                 else
-                    return a.back().getMinFinal() > b.back().getMinFinal();
+                    return a.getMin() > b.getMin(); 
             } else
-                return a.back().getHoraFinal() > b.back().getHoraFinal();
+                return a.getHora() > b.getHora(); 
         }
     }comparar;
+    vector <Funcionario> funcionarios;
 public:
     InterfacePrincipal();
     void menuPrincipal();
@@ -31,6 +34,7 @@ public:
     void spam(string mensagem);
     void imprimirTarefas();
     void intervalPartitioning(vector <Tarefa> &tarefas, priority_queue <vector <Tarefa>, vector <vector <Tarefa>>, comparar> &distribuicao);
+    void intervalPartitioning();
     void deletarTarefas();
 };
 
