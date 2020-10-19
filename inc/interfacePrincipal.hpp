@@ -11,12 +11,10 @@ private:
     vector <Tarefa> tarefas;
     typedef struct comparar {
         bool operator()(vector <Tarefa> &a, vector <Tarefa> &b) {
-            if(a.back().getHoraFinal() < b.back().getHoraFinal())
-                return false;
-            else if(a.back().getHoraFinal() == b.back().getHoraFinal())
+            if(a.back().getHoraFinal() == b.back().getHoraFinal())
                 return a.back().getMinFinal() > b.back().getMinFinal();
             else
-                return true;
+                return a.back().getHoraFinal() > b.back().getHoraFinal();
         }
     }comparar;
 public:

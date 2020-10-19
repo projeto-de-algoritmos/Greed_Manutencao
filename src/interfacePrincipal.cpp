@@ -130,40 +130,27 @@ void InterfacePrincipal::divisaoTarefas() {
 }
 
 bool ordenarInicioAntes(Tarefa a, Tarefa b) {
-    if(a.getHoraInicial() < b.getHoraInicial())
-        return true;
-    else if(a.getHoraInicial() == b.getHoraInicial())
-        return a.getMinInicial() < b.getMinInicial();
+    if(a.getHoraInicial() == b.getHoraInicial())
+        return a.getMinInicial() <= b.getMinInicial();
     else
-        return false;
+        return a.getHoraInicial() < b.getHoraInicial();
 }
 
 void InterfacePrincipal::intervalPartitioning(vector <Tarefa> &tarefas, priority_queue <vector <Tarefa>, vector <vector <Tarefa>>, comparar> &distribuicao) {
     tarefas = this->tarefas;
-    int qtdeTarefas = tarefas.size();
     sort(tarefas.begin(), tarefas.end(), ordenarInicioAntes);
+    int qtdeTarefas = tarefas.size();
     vector <Tarefa> secao;
     secao.push_back(tarefas[0]);
     distribuicao.push(secao);
     for(int i = 1; i < qtdeTarefas; i++) {
-        bool alocada = false;
         Tarefa topo = distribuicao.top().back();
-        if(topo.getHoraFinal() < tarefas[i].getHoraInicial()) {
+        if(topo.getHoraFinal() < tarefas[i].getHoraInicial() || (topo.getHoraFinal() == tarefas[i].getHoraInicial() && topo.getMinFinal() <= tarefas[i].getMinInicial())) {
             secao = distribuicao.top();
             distribuicao.pop();
             secao.push_back(tarefas[i]);
             distribuicao.push(secao);
-            alocada = true;
-        } else if(topo.getHoraFinal() == tarefas[i].getHoraInicial()) {
-            if(topo.getMinFinal() <= tarefas[i].getMinInicial()) {
-                secao = distribuicao.top();
-                distribuicao.pop();
-                secao.push_back(tarefas[i]);
-                distribuicao.push(secao);
-                alocada = true;
-            }
-        }
-        if(!alocada) {
+        } else {
             secao = vector <Tarefa>();
             secao.push_back(tarefas[i]);
             distribuicao.push(secao);
