@@ -15,11 +15,10 @@ private:
     int minDisponivel; 
 
 public: 
-    Funcionario(Tarefa tarefa);
+    Funcionario();
     int getHora();
-    void setHora(int hora); 
     int getMin(); 
-    void setMin(int min);  
+    void adicionarTarefa(Tarefa tarefa);  
     void imprimeTarefas(); 
     int totalTarefas(); 
 };

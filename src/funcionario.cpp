@@ -1,24 +1,20 @@
 #include "funcionario.hpp"
 
-Funcionario::Funcionario(Tarefa tarefa){
-    listaTarefas.push_back(tarefa); 
-}
+Funcionario::Funcionario(){}
 
 int Funcionario::getHora(){
     return horaDisponivel;
-}
-
-void Funcionario::setHora(int hora){
-    this->horaDisponivel = hora;
 }
 
 int Funcionario::getMin(){
     return minDisponivel;
 }
 
-void Funcionario::setMin(int min){
-    this->minDisponivel = minDisponivel;
-}  
+void Funcionario::adicionarTarefa(Tarefa tarefa){
+    listaTarefas.push_back(tarefa); 
+    this->horaDisponivel = tarefa.getHoraFinal();
+    this->minDisponivel = tarefa.getMinFinal();
+}
 
 void Funcionario::imprimeTarefas(){
     for(Tarefa t: listaTarefas)

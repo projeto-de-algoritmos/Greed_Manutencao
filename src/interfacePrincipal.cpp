@@ -152,7 +152,7 @@ bool ordenarInicioAntes(Tarefa a, Tarefa b) {
         return a.getHoraInicial() < b.getHoraInicial();
 }
 
-void InterfacePrincipal::intervalPartitioning(vector <Tarefa> &tarefas, priority_queue <vector <Tarefa>, vector <vector <Tarefa>>, comparar> &distribuicao) {
+/*void InterfacePrincipal::intervalPartitioning(vector <Tarefa> &tarefas, priority_queue <vector <Tarefa>, vector <vector <Tarefa>>, comparar> &distribuicao) {
     tarefas = this->tarefas;
     sort(tarefas.begin(), tarefas.end(), ordenarInicioAntes);
     int qtdeTarefas = tarefas.size();
@@ -172,11 +172,34 @@ void InterfacePrincipal::intervalPartitioning(vector <Tarefa> &tarefas, priority
             distribuicao.push(secao);
         }
     }
-}
+}*/
 
 void InterfacePrincipal::intervalPartitioning(){
     sort(tarefas.begin(), tarefas.end(), ordenarInicioAntes); 
-    priority_queue <vector <Tarefa>, vector <Funcionario>, comparar> distribuicao;
-    
+    priority_queue <Funcionario, vector <Funcionario>, comparar> distribuicao; 
+    int qntdTarefas = tarefas.size();
+    distribuicao.push(iniciaLista()); 
+    for(int i=1; i<qntdTarefas; i++){
+        Funcionario topo = distribuicao.top(); 
+        Funcionario aux; 
+        if(topo.getHora() < tarefas[i].getHoraInicial() || (topo.getHora() == tarefas[i].getHoraInicial() && topo.getMin() <= tarefas[i].getMinInicial())){
+            distribuicao.pop();
+            topo.adicionarTarefa(tarefas[i]);
+            distribuicao.push(topo);
+        }
+        else{
+            aux.adicionarTarefa(tarefas[i]);
+            distribuicao.push(aux);
+        }
+    }
+    for(int i=0; i < distribuicao.size(); i++){
+        funcionarios.push_back(distribuicao.top());
+        distribuicao.pop();
+    }
+}
 
+Funcionario InterfacePrincipal::iniciaLista(){
+    Funcionario funcionario;
+    funcionario.adicionarTarefa(tarefas[0]);
+    return funcionario; 
 }

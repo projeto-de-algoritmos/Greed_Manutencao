@@ -36,6 +36,7 @@ public:
     void intervalPartitioning(vector <Tarefa> &tarefas, priority_queue <vector <Tarefa>, vector <vector <Tarefa>>, comparar> &distribuicao);
     void intervalPartitioning();
     void deletarTarefas();
+    Funcionario iniciaLista();
 };
 
 #endif
