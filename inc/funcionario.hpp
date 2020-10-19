@@ -18,7 +18,7 @@ public:
     Funcionario(Tarefa tarefa);
     void setHora(int hora); 
     void setMin(int min);  
-
+    void imprimeTarefas(); 
 };
 
 
