@@ -9,16 +9,19 @@ InterfacePrincipal::InterfacePrincipal() {
 void InterfacePrincipal::menuPrincipal() {
     while(true) {
         cout << "(1) Cadastrar nova tarefa" << endl;
-        cout << "(2) Visualizar tarefas" << endl;
-        cout << "(3) Calcular divisão das tarefas" << endl;
+        cout << "(2) Deletar todas as tarefas" << endl;
+        cout << "(3) Visualizar tarefas" << endl;
+        cout << "(4) Calcular divisão das tarefas" << endl;
         cout << "(0) Finalizar" << endl;
-        int opcao = getInt("", 0, 3);
+        int opcao = getInt("", 0, 4);
         system("clear||cls");
         if(opcao == 1)
             cadastroTarefa();
         else if(opcao == 2)
-            imprimirTarefas();
+            deletarTarefas();
         else if(opcao == 3)
+            imprimirTarefas();
+        else if(opcao == 4)
             divisaoTarefas();
         else
             break;
@@ -76,6 +79,19 @@ void InterfacePrincipal::cadastroTarefa() {
     }
     else
         spam("Não foi possível cadastrar a tarefa. Por favor, verifique os dados");
+}
+
+void InterfacePrincipal::deletarTarefas() {
+    if(tarefas.empty()) {
+        spam("Nenhuma tarefa está cadastrada");
+        return;
+    }
+    string resposta = getString("Deletar todas as tarefas permanentemente? (S) Sim, (N) Não: ");
+    if(resposta[0] == 'S' || resposta[0] == 's') {
+        tarefas.clear();
+        spam("Todas as tarefas foram deletadas");
+    } else
+        spam("Operação cancelada");
 }
 
 bool InterfacePrincipal::validarCadastro(Tarefa tarefa) {
