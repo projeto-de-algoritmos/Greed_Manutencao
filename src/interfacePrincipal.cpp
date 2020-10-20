@@ -125,16 +125,6 @@ void InterfacePrincipal::divisaoTarefas(){
         return;
     }
     intervalPartitioning();
-    int qntd = funcionarios.size();
-    for(int i=0; i< qntd; i++){
-        cout << "__Divisão " << i+1 << "__"<< endl << endl;
-        funcionarios[i].imprimeTarefas();
-        cout << "----------------------------------------" << endl << endl;
-    }
-     cout << "(0) Voltar" << endl; 
-    string volta;
-    cin >> volta;
-    system("clear||cls");
 }
 
 bool ordenarInicioAntes(Tarefa a, Tarefa b) {
@@ -144,44 +134,51 @@ bool ordenarInicioAntes(Tarefa a, Tarefa b) {
         return a.getHoraInicial() < b.getHoraInicial();
 }
 
-void InterfacePrincipal::intervalPartitioning(){
-    sort(tarefas.begin(), tarefas.end(), ordenarInicioAntes); 
-    funcionarios.clear();
-    priority_queue <Funcionario, vector <Funcionario>, comparar> distribuicao; 
+void InterfacePrincipal::intervalPartitioning() {
+    vector <Tarefa> tarefas = this->tarefas;
+    sort(tarefas.begin(), tarefas.end(), ordenarInicioAntes);
+    priority_queue <Funcionario, vector <Funcionario>, comparar> distribuicao;
+    distribuicao.push(iniciaLista(tarefas[0]));
     int qntdTarefas = tarefas.size();
-    distribuicao.push(iniciaLista());  
-    for(int i=1; i<qntdTarefas; i++){
-        Funcionario topo = distribuicao.top();  
-        if(topo.getHora() < tarefas[i].getHoraInicial() || (topo.getHora() == tarefas[i].getHoraInicial() && topo.getMin() <= tarefas[i].getMinInicial()))
-            atualiza(distribuicao, i);
+    for(int i = 1; i < qntdTarefas; i++) {
+        Funcionario topo = distribuicao.top();
+        if(topo.getHoraDisponivel() < tarefas[i].getHoraInicial() || (topo.getHoraDisponivel() == tarefas[i].getHoraInicial() && topo.getMinDisponivel() <= tarefas[i].getMinInicial()))
+            atualiza(distribuicao, tarefas[i]);
         else
-            insere(distribuicao, i);
+            insere(distribuicao, tarefas[i]);
     }
-    distibuir(distribuicao);
+    imprimirTarefas(distribuicao);
 }
 
-Funcionario InterfacePrincipal::iniciaLista(){
+Funcionario InterfacePrincipal::iniciaLista(Tarefa tarefa){
     Funcionario funcionario;
-    funcionario.adicionarTarefa(tarefas[0]);
+    funcionario.adicionarTarefa(tarefa);
     return funcionario; 
 }
 
-void InterfacePrincipal::atualiza( priority_queue <Funcionario, vector <Funcionario>, comparar> &distribuicao, int i){
+void InterfacePrincipal::atualiza( priority_queue <Funcionario, vector <Funcionario>, comparar> &distribuicao, Tarefa tarefa){
     Funcionario topo = distribuicao.top();
     distribuicao.pop();
-    topo.adicionarTarefa(tarefas[i]);
+    topo.adicionarTarefa(tarefa);
     distribuicao.push(topo);
 }
-void InterfacePrincipal::insere( priority_queue <Funcionario, vector <Funcionario>, comparar> &distribuicao, int i){
+void InterfacePrincipal::insere( priority_queue <Funcionario, vector <Funcionario>, comparar> &distribuicao, Tarefa tarefa){
     Funcionario aux;
-    aux.adicionarTarefa(tarefas[i]);
+    aux.adicionarTarefa(tarefa);
     distribuicao.push(aux);
 }
 
-void InterfacePrincipal::distibuir(priority_queue <Funcionario, vector <Funcionario>, comparar> &distribuicao){
-    int qntd = distribuicao.size();
-    for(int i=0; i < qntd; i++){
-        funcionarios.push_back(distribuicao.top());
+void InterfacePrincipal::imprimirTarefas(priority_queue <Funcionario, vector <Funcionario>, comparar> &distribuicao) {
+    int qtdeParticoes = distribuicao.size();
+    for(int i = 0; i < qtdeParticoes; i++) {
+        cout << "__Funcionário " << i + 1 << "__"<< endl << endl;
+        Funcionario funcionario = distribuicao.top();
         distribuicao.pop();
+        funcionario.imprimeTarefas();
+        cout << "----------------------------------------" << endl << endl;
     }
+    cout << "(0) Voltar" << endl; 
+    string volta;
+    cin >> volta;
+    system("clear||cls");
 }

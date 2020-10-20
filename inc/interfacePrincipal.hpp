@@ -10,19 +10,17 @@
 class InterfacePrincipal {
 private:
     vector <Tarefa> tarefas;
-    typedef struct comparar{
-        bool operator()(Funcionario a, Funcionario b) {
-            if(a.getHora() == b.getHora()){
-                if(a.getMin() == b.getMin()){
-                    return (a.totalTarefas() > b.totalTarefas());
-                }
+    typedef struct comparar {
+        bool operator()(Funcionario &a, Funcionario &b) {
+            if(a.getHoraDisponivel() == b.getHoraDisponivel()) {
+                if(a.getMinDisponivel() == b.getMinDisponivel())
+                    return a.totalTarefas() > b.totalTarefas();
                 else
-                    return a.getMin() > b.getMin(); 
+                    return a.getMinDisponivel() > b.getMinDisponivel(); 
             } else
-                return a.getHora() > b.getHora(); 
+                return a.getHoraDisponivel() > b.getHoraDisponivel(); 
         }
     }comparar;
-    vector <Funcionario> funcionarios;
 public:
     InterfacePrincipal();
     void menuPrincipal();
@@ -34,13 +32,11 @@ public:
     void spam(string mensagem);
     void imprimirTarefas();
     void intervalPartitioning();
-    Funcionario iniciaLista();
-    void atualiza(priority_queue <Funcionario, vector <Funcionario>, comparar> &distribuicao, int i);
-    void insere(priority_queue <Funcionario, vector <Funcionario>, comparar> &distribuicao, int i);
-    void distibuir(priority_queue <Funcionario, vector <Funcionario>, comparar> &distribuicao); 
-    void deletarTarefas();
-    
-    
+    Funcionario iniciaLista(Tarefa tarefa);
+    void atualiza(priority_queue <Funcionario, vector <Funcionario>, comparar> &distribuicao, Tarefa tarefa);
+    void insere(priority_queue <Funcionario, vector <Funcionario>, comparar> &distribuicao, Tarefa tarefa);
+    void imprimirTarefas(priority_queue <Funcionario, vector <Funcionario>, comparar> &distribuicao); 
+    void deletarTarefas();  
 };
 
 #endif
