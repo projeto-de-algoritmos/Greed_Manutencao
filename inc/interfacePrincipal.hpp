@@ -33,10 +33,13 @@ public:
     void divisaoTarefas();
     void spam(string mensagem);
     void imprimirTarefas();
-    void intervalPartitioning(vector <Tarefa> &tarefas, priority_queue <vector <Tarefa>, vector <vector <Tarefa>>, comparar> &distribuicao);
     void intervalPartitioning();
-    void deletarTarefas();
     Funcionario iniciaLista();
+    void atualiza(priority_queue <Funcionario, vector <Funcionario>, comparar> &distribuicao, int i);
+    void insere(priority_queue <Funcionario, vector <Funcionario>, comparar> &distribuicao, int i);
+    void distibuir(priority_queue <Funcionario, vector <Funcionario>, comparar> &distribuicao); 
+    void deletarTarefas();
+    
     
 };
 
