@@ -119,7 +119,7 @@ void InterfacePrincipal::imprimirTarefas() {
     }
 }
 
-void InterfacePrincipal::divisaoTarefas() {
+/*void InterfacePrincipal::divisaoTarefas() {
     if(tarefas.empty()) {
         spam("É necessário cadastrar tarefas");
         return;
@@ -140,6 +140,25 @@ void InterfacePrincipal::divisaoTarefas() {
         cout << "----------------------------------------" << endl << endl;
     }
     cout << "(0) Voltar" << endl; 
+    string volta;
+    cin >> volta;
+    system("clear||cls");
+}
+*/
+
+void InterfacePrincipal::divisaoTarefas(){
+    if(tarefas.empty()) {
+        spam("É necessário cadastrar tarefas");
+        return;
+    }
+    intervalPartitioning();
+    int qntd = funcionarios.size();
+    for(int i=0; i< qntd; i++){
+        cout << "__Divisão " << i+1 << "__"<< endl << endl;
+        funcionarios[i].imprimeTarefas();
+        cout << "----------------------------------------" << endl << endl;
+    }
+     cout << "(0) Voltar" << endl; 
     string volta;
     cin >> volta;
     system("clear||cls");
@@ -176,24 +195,30 @@ bool ordenarInicioAntes(Tarefa a, Tarefa b) {
 
 void InterfacePrincipal::intervalPartitioning(){
     sort(tarefas.begin(), tarefas.end(), ordenarInicioAntes); 
+    funcionarios.clear();
     priority_queue <Funcionario, vector <Funcionario>, comparar> distribuicao; 
     int qntdTarefas = tarefas.size();
     distribuicao.push(iniciaLista()); 
+    Funcionario topo = distribuicao.top(); 
     for(int i=1; i<qntdTarefas; i++){
-        Funcionario topo = distribuicao.top(); 
-        Funcionario aux; 
+        Funcionario topo = distribuicao.top();  
         if(topo.getHora() < tarefas[i].getHoraInicial() || (topo.getHora() == tarefas[i].getHoraInicial() && topo.getMin() <= tarefas[i].getMinInicial())){
+            cout << "Caso 1" << endl;
             distribuicao.pop();
             topo.adicionarTarefa(tarefas[i]);
             distribuicao.push(topo);
         }
         else{
+            cout << "Caso 2" << endl;
+            Funcionario aux;
             aux.adicionarTarefa(tarefas[i]);
             distribuicao.push(aux);
         }
     }
-    for(int i=0; i < distribuicao.size(); i++){
+    int qntd = distribuicao.size();
+    for(int i=0; i < qntd; i++){
         funcionarios.push_back(distribuicao.top());
+        cout << "Funcionário " << i+1 << " adicionado" <<endl;
         distribuicao.pop();
     }
 }

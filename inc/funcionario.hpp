@@ -13,7 +13,7 @@ private:
     vector <Tarefa> listaTarefas; 
     int horaDisponivel;
     int minDisponivel; 
-
+    
 public: 
     Funcionario();
     int getHora();

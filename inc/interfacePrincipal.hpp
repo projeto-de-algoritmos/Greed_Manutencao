@@ -37,6 +37,7 @@ public:
     void intervalPartitioning();
     void deletarTarefas();
     Funcionario iniciaLista();
+    
 };
 
 #endif

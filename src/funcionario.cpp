@@ -2,6 +2,7 @@
 
 Funcionario::Funcionario(){}
 
+
 int Funcionario::getHora(){
     return horaDisponivel;
 }
@@ -17,8 +18,10 @@ void Funcionario::adicionarTarefa(Tarefa tarefa){
 }
 
 void Funcionario::imprimeTarefas(){
-    for(Tarefa t: listaTarefas)
+    for(Tarefa t: listaTarefas){
         t.imprimir(); 
+        cout << endl;
+    }
 }
 
 int Funcionario::totalTarefas() {
