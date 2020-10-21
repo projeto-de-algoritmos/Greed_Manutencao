@@ -33,6 +33,7 @@ public:
     void spam(string mensagem);
     void imprimirTarefas();
     void intervalPartitioning();
+    bool Disponivel(Funcionario topo, Tarefa tarefa);
     Funcionario iniciaLista(Tarefa tarefa);
     void atualiza(priority_queue <Funcionario, vector <Funcionario>, comparar> &distribuicao, Tarefa tarefa);
     void insere(priority_queue <Funcionario, vector <Funcionario>, comparar> &distribuicao, Tarefa tarefa);
