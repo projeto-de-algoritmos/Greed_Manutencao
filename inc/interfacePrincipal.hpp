@@ -10,6 +10,7 @@
 class InterfacePrincipal {
 private:
     vector <Tarefa> tarefas;
+    int intervaloHora, intervaloMin;
     typedef struct comparar {
         bool operator()(Funcionario &a, Funcionario &b) {
             if(a.getHoraDisponivel() == b.getHoraDisponivel()) {
@@ -36,7 +37,9 @@ public:
     void atualiza(priority_queue <Funcionario, vector <Funcionario>, comparar> &distribuicao, Tarefa tarefa);
     void insere(priority_queue <Funcionario, vector <Funcionario>, comparar> &distribuicao, Tarefa tarefa);
     void imprimirTarefas(priority_queue <Funcionario, vector <Funcionario>, comparar> &distribuicao); 
-    void deletarTarefas();  
+    void deletarTarefas();
+    void definirIntervalo();
+    string formatarIntervalo();
 };
 
 #endif

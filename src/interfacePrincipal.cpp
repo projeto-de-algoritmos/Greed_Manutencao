@@ -3,6 +3,8 @@
 #include <algorithm>
 
 InterfacePrincipal::InterfacePrincipal() {
+    intervaloHora = 0;
+    intervaloMin = 0;
     system("clear||cls");
 }
 
@@ -11,9 +13,10 @@ void InterfacePrincipal::menuPrincipal() {
         cout << "(1) Cadastrar nova tarefa" << endl;
         cout << "(2) Deletar todas as tarefas" << endl;
         cout << "(3) Visualizar tarefas" << endl;
-        cout << "(4) Calcular divisão das tarefas" << endl;
+        cout << "(4) Definir intervalo mínimo (Atual: " << formatarIntervalo() << ")" << endl;
+        cout << "(5) Calcular divisão das tarefas" << endl;
         cout << "(0) Finalizar" << endl;
-        int opcao = getInt("", 0, 4);
+        int opcao = getInt("", 0, 5);
         system("clear||cls");
         if(opcao == 1)
             cadastroTarefa();
@@ -22,10 +25,23 @@ void InterfacePrincipal::menuPrincipal() {
         else if(opcao == 3)
             imprimirTarefas();
         else if(opcao == 4)
+            definirIntervalo();
+        else if(opcao == 5)
             divisaoTarefas();
         else
             break;
     }
+}
+
+string InterfacePrincipal::formatarIntervalo() {
+    string intervalo = "";
+    if(intervaloHora < 10)
+        intervalo += "0"; 
+    intervalo += to_string(intervaloHora) + ":"; 
+    if(intervaloMin < 10)
+        intervalo += "0"; 
+    intervalo += to_string(intervaloMin);
+    return intervalo;
 }
 
 string InterfacePrincipal::getString(string mensagem) {
@@ -58,6 +74,13 @@ int InterfacePrincipal::getInt(string mensagem, int min, int max) {
     return valor;
 }
 
+void InterfacePrincipal::definirIntervalo() {
+    cout << "Intervalo mínimo entre duas tarefas" << endl;
+    intervaloHora = getInt("Hora (0 - 23): ", 0, 23);
+    intervaloMin = getInt("Minuto (0 - 59): ", 0, 59);
+    spam("O intervalo mínimo foi definido para " + formatarIntervalo());
+}
+
 void InterfacePrincipal::spam(string mensagem) {
     system("clear||cls");
     cout << mensagem << endl << endl;
@@ -70,7 +93,7 @@ void InterfacePrincipal::cadastroTarefa() {
     int hI = getInt("Hora (0 - 23): ", 0, 23);
     int mI = getInt("Minuto (0 - 59): ", 0, 59);
     cout << endl << "Horário de conclusão da tarefa" << endl;
-    int hF = getInt("Hora (0 - 23): ", 0, 24);
+    int hF = getInt("Hora (0 - 23): ", 0, 23);
     int mF = getInt("Minuto (0 - 59): ", 0, 59);
     Tarefa tarefa(hI,mI,hF,mF,descricao); 
     if(validarCadastro(tarefa)){
@@ -142,7 +165,7 @@ void InterfacePrincipal::intervalPartitioning() {
     int qntdTarefas = tarefas.size();
     for(int i = 1; i < qntdTarefas; i++) {
         Funcionario topo = distribuicao.top();
-        if(topo.getHoraDisponivel() < tarefas[i].getHoraInicial() || (topo.getHoraDisponivel() == tarefas[i].getHoraInicial() && topo.getMinDisponivel() <= tarefas[i].getMinInicial()))
+        if(topo.getHoraDisponivel() + intervaloHora < tarefas[i].getHoraInicial() || (topo.getHoraDisponivel() + intervaloHora == tarefas[i].getHoraInicial() && topo.getMinDisponivel() + intervaloMin <= tarefas[i].getMinInicial()))
             atualiza(distribuicao, tarefas[i]);
         else
             insere(distribuicao, tarefas[i]);
