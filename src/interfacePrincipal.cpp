@@ -173,19 +173,15 @@ void InterfacePrincipal::intervalPartitioning() {
     imprimirTarefas(distribuicao);
 }
 
-bool InterfacePrincipal::Disponivel(Funcionario topo, Tarefa tarefa){
+bool InterfacePrincipal::Disponivel(Funcionario &topo, Tarefa tarefa){
     int horaRealDisponivel, minRealDisponivel;
-    horaRealDisponivel = topo.getHoraDisponivel() + intervaloHora; 
-    minRealDisponivel = topo.getMinDisponivel() + intervaloMin; 
+    horaRealDisponivel = topo.getHoraDisponivel() + intervaloHora;
+    minRealDisponivel = topo.getMinDisponivel() + intervaloMin;
     if(minRealDisponivel > 59){
-        horaRealDisponivel++; 
+        horaRealDisponivel++;
         minRealDisponivel = minRealDisponivel%60;
-    } 
-    if(horaRealDisponivel > 23) 
-        return false; 
-    else if(tarefa.getHoraInicial() > horaRealDisponivel || (tarefa.getHoraInicial() == horaRealDisponivel && tarefa.getMinInicial() >= minRealDisponivel))
-        return true;
-    return false;
+    }
+    return tarefa.getHoraInicial() > horaRealDisponivel || (tarefa.getHoraInicial() == horaRealDisponivel && tarefa.getMinInicial() >= minRealDisponivel);
 }
 
 Funcionario InterfacePrincipal::iniciaLista(Tarefa tarefa){
